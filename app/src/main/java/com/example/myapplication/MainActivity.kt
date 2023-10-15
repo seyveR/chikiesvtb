@@ -15,13 +15,15 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
+import com.example.myapplication.BottomSheetDialogFragments.OfficeInfoBottomSheetDialogFragment
+import com.example.myapplication.BottomSheetDialogFragments.SelectTalonBottomSheetDialogFragment
+import com.example.myapplication.BottomSheetDialogFragments.TalonBottomSheetDialogFragment
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.model.Destination
 import com.example.myapplication.model.Office
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.snackbar.Snackbar
 import com.yandex.mapkit.MapKit
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.RequestPoint
@@ -37,8 +39,10 @@ import kotlinx.coroutines.*
 import network.OpenMeteoWeatherInteractor
 import com.google.android.gms.location.LocationCallback as LocationCallback1
 
-class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
-    private val STARTING_CAMERA_POSITION = CameraPosition(Point(55.787258, 37.602306), 13f, 0f, 30f)
+class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener,
+    OfficeInfoBottomSheetDialogFragment.OnButtonClickListener,
+    SelectTalonBottomSheetDialogFragment.OnButtonClickListener,
+    TalonBottomSheetDialogFragment.OnButtonClickListener{
     private lateinit var mapView: MapView
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -47,16 +51,46 @@ class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
     private var mapObjects: MapObjectCollection? = null
     private var currentPlacementPlacemark: PlacemarkMapObject? = null
     private var currentRoute: PolylineMapObject? = null
+    private lateinit var selectedOffice: Office
+    lateinit var bottomSheetDialogFragment: OfficeInfoBottomSheetDialogFragment
+    lateinit var bottomSheetDialogFragmentSelectTalon: SelectTalonBottomSheetDialogFragment
+    var bottomSheetDialogFragmentTalon: TalonBottomSheetDialogFragment? = null
 
     private val placemarkTapListener = object : MapObjectTapListener {
         override fun onMapObjectTap(mapObject: MapObject, point: Point): Boolean {
-            val office = mapObject.userData as Office
-            val bottomSheetDialogFragment = OfficeInfoBottomSheetDialogFragment(office)
-            createRoute(currentPlacementPlacemark!!.geometry, Point(office.Lat,office.Lon))
-            bottomSheetDialogFragment.show(supportFragmentManager, bottomSheetDialogFragment.tag)
+            selectedOffice = mapObject.userData as Office
+            showBottomSheet(selectedOffice)
             return true
         }
     }
+    fun showBottomSheet(office: Office) {
+        bottomSheetDialogFragment = OfficeInfoBottomSheetDialogFragment(office)
+        bottomSheetDialogFragment.setOnButtonClickListener(this)
+        bottomSheetDialogFragment.show(supportFragmentManager, "BottomSheetDialogFragment")
+    }
+
+    override fun onCreateRouteClick() {
+        createRoute(currentPlacementPlacemark!!.geometry, Point(selectedOffice.Lat,selectedOffice.Lon))
+        bottomSheetDialogFragment.dismiss()
+        if (bottomSheetDialogFragmentTalon != null){
+            bottomSheetDialogFragmentTalon!!.dismiss()
+        }
+    }
+
+    override fun onStartCreateTalonClick() {
+        bottomSheetDialogFragment.dismiss()
+        bottomSheetDialogFragmentSelectTalon = SelectTalonBottomSheetDialogFragment(selectedOffice)
+        bottomSheetDialogFragmentSelectTalon.setOnButtonClickListener(this)
+        bottomSheetDialogFragmentSelectTalon.show(supportFragmentManager, "SecondBottomSheetDialogFragment")
+    }
+
+    override fun onGetTalonClick() {
+        bottomSheetDialogFragmentSelectTalon.dismiss()
+        bottomSheetDialogFragmentTalon = TalonBottomSheetDialogFragment(selectedOffice, bottomSheetDialogFragmentSelectTalon.getSelectedRadioButtonIndex())
+        bottomSheetDialogFragmentTalon!!.setOnButtonClickListener(this)
+        bottomSheetDialogFragmentTalon!!.show(supportFragmentManager, "ThirdBottomSheetDialogFragment")
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,6 +141,7 @@ class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
                                     addTapListener(placemarkTapListener)
                                     userData = office
                                 }
+
                             }
                         }
                     }.await()
@@ -170,6 +205,7 @@ class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
             Log.d("DESTINATION", url!!)
             var startPoint = Point(data?.getDoubleExtra("lat",0.0)!!,
                 data?.getDoubleExtra("lon", 0.0)!!)
+            mapView.map.move(CameraPosition(startPoint, 13f, 0f, 30f))
             GlobalScope.async {
                 val destination: Destination =
                     OpenMeteoWeatherInteractor().requestDestination(url!!)           // Вызовите метод с полученным URL
@@ -226,4 +262,6 @@ class MainActivity : AppCompatActivity(), DrivingSession.DrivingRouteListener {
         var errorMessage = "Неизвестная ошибка!"
         Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT)
     }
+
+
 }

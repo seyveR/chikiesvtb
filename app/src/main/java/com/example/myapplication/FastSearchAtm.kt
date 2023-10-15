@@ -85,7 +85,7 @@ class FastSearchAtm: AppCompatActivity() {
     }
 
     fun createRoute(point: Point){
-        var url:String = "https://802f-95-54-230-204.ngrok-free.app/distance_model?lat=${point.latitude}&lon=${point.longitude}"
+        var url:String = "https://802f-95-54-230-204.ngrok-free.app/distance_model?lat=${point.latitude}&lon=${point.longitude}&office=false"
         val car: RadioButton = findViewById(R.id.radioButtonCar)
         url += "&venicle=${car.isChecked}"
 

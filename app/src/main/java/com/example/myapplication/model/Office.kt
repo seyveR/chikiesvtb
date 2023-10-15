@@ -1,10 +1,10 @@
 package com.example.myapplication.model
 
 data class Office(
-    val salePointName: String,
-    val address: String,
+    val SalePointName: String,
+    val Address: String,
     val openHours: List<OpenHours>,
-    val openHoursIndividual: List<OpenHours>,
+    val openHoursIndividual: List<OpenHoursIndividual>,
     val Lat: Double,
     val Lon: Double,
     val servLe: Int?,
@@ -18,11 +18,17 @@ data class Office(
     val transfers_and_payments: Int?,
     val transfers_and_payments_1: Int?,
     val insurance: Int?,
-    val investment_managment: Int?
-)
+    val investment_managment: Int?,
+    val openHour: List<List<String>>,
+    )
 
 data class OpenHours(
+    val busy: List<String> ,
     val days: String?,
     val hours: String?,
-    val busy: List<Int?> // Assuming the type is Int, replace it with the actual type
+)
+
+data class OpenHoursIndividual(
+    val days: String?,
+    val hours: String?,
 )

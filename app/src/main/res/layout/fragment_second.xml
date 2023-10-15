@@ -1,27 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SecondFragment">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/textview_second"
-        android:layout_width="wrap_content"
+        android:id="@+id/officeName3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/button_second"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Наименование"/>
 
-    <Button
-        android:id="@+id/button_second"
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_marginTop="16dp"
+        android:id="@+id/officeAddress3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/previous"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_second" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="16sp"
+        android:text="Адрес"/>
+
+
+    <RadioGroup
+        android:id="@+id/radioGroupTalon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RadioButton
+            android:checked="true"
+            android:id="@+id/work_with_bank_account2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Открытие и ведение банковских счетов"
+            />
+
+        <RadioButton
+            android:id="@+id/working_with_debit_credit_cards2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Выдача кредитных и дебетовых карт" />
+
+        <RadioButton
+            android:id="@+id/credits2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Выдача кредитов и займов" />
+
+        <RadioButton
+            android:id="@+id/currency_cash2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Обмен валют и услуги кассы" />
+
+        <RadioButton
+            android:id="@+id/saving_account_deposits2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Сберегательные счета и депозиты" />
+
+        <RadioButton
+            android:id="@+id/money2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Снятие наличных" />
+
+        <RadioButton
+            android:id="@+id/bigmoney2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Снятие наличных от миллиона" />
+
+        <RadioButton
+            android:id="@+id/insurance2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Страхование депозитов и др. виды" />
+
+        <RadioButton
+            android:id="@+id/investment_managment2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Инвестиционные услуги и управление активами" />
+        <RadioButton
+            android:id="@+id/transfers_and_payments2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ach_round"
+            android:button="@null"
+            android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+            android:paddingStart="10dp"
+            android:paddingEnd="8dp"
+            android:text="Переводы денежных средств и платежи" />
+    </RadioGroup>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/get_talon2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_style"
+        android:text="Получить талон"
+        android:textSize="17dp" />
+
+</LinearLayout>
